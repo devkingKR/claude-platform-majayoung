@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>마자영 - 마케팅 전문가 매칭 플랫폼</title>
+    <meta name="description" content="소상공인을 위한 마케팅 전문가 매칭 플랫폼. 간단한 요청으로 여러 업체의 견적을 비교하고 최적의 파트너를 찾으세요.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: 100px;
+            padding: 4rem 0;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .hero .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            min-width: 200px;
+        }
+
+        /* Features Section */
+        .features {
+            background: white;
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* How it Works */
+        .how-it-works {
+            background: #f8f9fa;
+            padding: 5rem 0;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            opacity: 0.9;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: white;
+            padding: 5rem 0;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            color: #667eea;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #555;
+            color: #ccc;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .auth-buttons {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            animation: fadeInUp 0.8s forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav class="container">
+            <div class="logo">마자영</div>
+            <ul class="nav-links">
+                <li><a href="#home">홈</a></li>
+                <li><a href="#features">서비스</a></li>
+                <li><a href="#how-it-works">이용방법</a></li>
+                <li><a href="#contact">문의</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-secondary" onclick="openModal('loginModal')">로그인</a>
+                <a href="#" class="btn btn-primary" onclick="openModal('signupModal')">회원가입</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>마케팅이 어려우신가요?</h1>
+            <p class="subtitle">이제 <strong>마자영</strong>에서 쉽고 안전하게 해결하세요!</p>
+            <p class="tagline">소상공인을 위한 마케팅 전문가 매칭 플랫폼</p>
+            <div class="hero-buttons">
+                <a href="#" class="btn btn-primary btn-large" onclick="openModal('requestModal')">
+                    <i class="fas fa-search"></i> 마케팅 전문가 찾기
+                </a>
+                <a href="#" class="btn btn-secondary btn-large" onclick="openModal('partnerModal')">
+                    <i class="fas fa-briefcase"></i> 전문가로 등록하기
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">왜 마자영을 선택해야 할까요?</h2>
+            <div class="features-grid">
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-handshake feature-icon"></i>
+                    <h3>간편한 매칭</h3>
+                    <p>복잡한 검색 과정 없이 간단한 요청만으로 여러 전문가의 견적을 받아보세요. 최적의 파트너를 쉽게 찾을 수 있습니다.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3>안전한 거래</h3>
+                    <p>평가 시스템, 에스크로, 표준계약서를 통해 안전하게 거래하세요. 첫 거래에 대한 걱정을 덜어드립니다.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-award feature-icon"></i>
+                    <h3>검증된 전문가</h3>
+                    <p>엄격한 심사를 통과한 검증된 마케팅 전문가들만 등록되어 있습니다. 품질 높은 서비스를 보장합니다.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h3>맞춤형 추천</h3>
+                    <p>AI 기반 추천 시스템으로 업종과 니즈에 맞는 최적의 마케팅 전문가를 추천해드립니다.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-graduation-cap feature-icon"></i>
+                    <h3>교육 콘텐츠</h3>
+                    <p>마케팅 기초부터 실무까지, 체계적인 교육 콘텐츠로 사업자의 마케팅 역량을 키워드립니다.</p>
+                </div>
+                <div class="feature-card animate-on-scroll">
+                    <i class="fas fa-users feature-icon"></i>
+                    <h3>활발한 커뮤니티</h3>
+                    <p>같은 고민을 하는 사업자들과 정보를 공유하고, 마케팅 노하우를 나눌 수 있는 커뮤니티를 제공합니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="container">
+            <h2 class="section-title">이용방법</h2>
+            <div class="steps">
+                <div class="step animate-on-scroll">
+                    <div class="step-number">1</div>
+                    <h3>요청서 작성</h3>
+                    <p>필요한 마케팅 서비스와 예산을 간단히 작성해주세요. 3분이면 완료됩니다.</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">2</div>
+                    <h3>견적서 받기</h3>
+                    <p>검증된 마케팅 전문가들이 맞춤 견적서를 보내드립니다. 최대 5개까지 받을 수 있어요.</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">3</div>
+                    <h3>비교 후 선택</h3>
+                    <p>견적서를 꼼꼼히 비교하고, 마자영 추천과 리뷰를 참고해서 최적의 파트너를 선택하세요.</p>
+                </div>
+                <div class="step animate-on-scroll">
+                    <div class="step-number">4</div>
+                    <h3>안전한 진행</h3>
+                    <p>계약서 작성부터 결제까지 플랫폼에서 안전하게 진행하고, 만족스러운 결과를 얻으세요.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h3>500+</h3>
+                    <p>검증된 마케팅 전문가</p>
+                </div>
+                <div class="stat-item">
+                    <h3>1,200+</h3>
+                    <p>성공적인 매칭</p>
+                </div>
+                <div class="stat-item">
+                    <h3>95%</h3>
+                    <p>고객 만족도</p>
+                </div>
+                <div class="stat-item">
+                    <h3>24시간</h3>
+                    <p>평균 응답 시간</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>지금 시작하세요!</h2>
+            <p>마케팅 고민, 이제 그만! 마자영에서 해답을 찾아보세요.</p>
+            <a href="#" class="btn btn-primary btn-large" onclick="openModal('requestModal')">
+                무료로 견적 받기
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>마자영</h3>
+                    <p>소상공인을 위한<br>마케팅 전문가 매칭 플랫폼</p>
+                </div>
+                <div class="footer-section">
+                    <h3>서비스</h3>
+                    <ul>
+                        <li><a href="#">마케팅 전문가 찾기</a></li>
+                        <li><a href="#">전문가 등록</a></li>
+                        <li><a href="#">마케팅 교육</a></li>
+                        <li><a href="#">커뮤니티</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>고객지원</h3>
+                    <ul>
+                        <li><a href="#">이용방법</a></li>
+                        <li><a href="#">자주묻는질문</a></li>
+                        <li><a href="#">1:1 문의</a></li>
+                        <li><a href="#">공지사항</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>회사정보</h3>
+                    <ul>
+                        <li><a href="#">회사소개</a></li>
+                        <li><a href="#">이용약관</a></li>
+                        <li><a href="#">개인정보처리방침</a></li>
+                        <li><a href="#">파트너십</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 마자영. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            <h2>로그인</h2>
+            <form>
+                <div class="form-group">
+                    <label for="loginEmail">이메일</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">비밀번호</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">로그인</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal" id="signupModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('signupModal')">&times;</button>
+            <h2>회원가입</h2>
+            <form>
+                <div class="form-group">
+                    <label for="userType">가입 유형</label>
+                    <select id="userType" required>
+                        <option value="">선택해주세요</option>
+                        <option value="client">소상공인/자영업자</option>
+                        <option value="expert">마케팅 전문가</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">이메일</label>
+                    <input type="email" id="signupEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">비밀번호</label>
+                    <input type="password" id="signupPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="signupName">이름/상호명</label>
+                    <input type="text" id="signupName" required>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">회원가입</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Request Modal -->
+    <div class="modal" id="requestModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('requestModal')">&times;</button>
+            <h2>마케팅 서비스 요청</h2>
+            <form>
+                <div class="form-group">
+                    <label for="businessType">업종</label>
+                    <select id="businessType" required>
+                        <option value="">선택해주세요</option>
+                        <option value="restaurant">음식점</option>
+                        <option value="retail">소매업</option>
+                        <option value="service">서비스업</option>
+                        <option value="beauty">미용/뷰티</option>
+                        <option value="education">교육</option>
+                        <option value="other">기타</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="serviceType">필요한 마케팅 서비스</label>
+                    <select id="serviceType" required>
+                        <option value="">선택해주세요</option>
+                        <option value="sns">SNS 마케팅</option>
+                        <option value="ad">광고 운영</option>
+                        <option value="seo">검색엔진 최적화</option>
+                        <option value="content">콘텐츠 제작</option>
+                        <option value="brand">브랜딩</option>
+                        <option value="consulting">마케팅 컨설팅</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="budget">예산</label>
+                    <select id="budget" required>
+                        <option value="">선택해주세요</option>
+                        <option value="under50">50만원 미만</option>
+                        <option value="50to100">50-100만원</option>
+                        <option value="100to300">100-300만원</option>
+                        <option value="300to500">300-500만원</option>
+                        <option value="over500">500만원 이상</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">상세 내용</label>
+                    <textarea id="description" rows="4" placeholder="원하는 마케팅 서비스에 대해 자세히 설명해주세요."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">견적 요청하기</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Partner Modal -->
+    <div class="modal" id="partnerModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('partnerModal')">&times;</button>
+            <h2>마케팅 전문가 등록</h2>
+            <form>
+                <div class="form-group">
+                    <label for="partnerType">전문가 유형</label>
+                    <select id="partnerType" required>
+                        <option value="">선택해주세요</option>
+                        <option value="freelancer">개인 프리랜서</option>
+                        <option value="agency">마케팅 에이전시</option>
+                        <option value="company">기업</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="specialties">전문 분야</label>
+                    <select id="specialties" required multiple>
+                        <option value="sns">SNS 마케팅</option>
+                        <option value="ad">광고 운영</option>
+                        <option value="seo">검색엔진 최적화</option>
+                        <option value="content">콘텐츠 제작</option>
+                        <option value="brand">브랜딩</option>
+                        <option value="consulting">마케팅 컨설팅</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="experience">경력</label>
+                    <select id="experience" required>
+                        <option value="">선택해주세요</option>
+                        <option value="1-3">1-3년</option>
+                        <option value="3-5">3-5년</option>
+                        <option value="5-10">5-10년</option>
+                        <option value="over10">10년 이상</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="portfolio">포트폴리오 링크</label>
+                    <input type="url" id="portfolio" placeholder="https://...">
+                </div>
+                <div class="form-group">
+                    <label for="partnerDescription">자기소개</label>
+                    <textarea id="partnerDescription" rows="4" placeholder="본인의 전문성과 경험을 소개해주세요."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">등록 신청하기</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animate elements
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Form submissions (placeholder functionality)
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('서비스 준비 중입니다. 곧 정식 서비스로 만나뵙겠습니다!');
+                });
+            });
+        });
+
+        // Mobile menu toggle (for future implementation)
+        function toggleMobileMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('active');
+        }
+
+        // Statistics counter animation
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 20);
+        }
+
+        // Trigger counter animation when stats section is visible
+        const statsSection = document.querySelector('.stats');
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumbers = entry.target.querySelectorAll('.stat-item h3');
+                    statNumbers.forEach(stat => {
+                        const target = parseInt(stat.textContent.replace(/\D/g, ''));
+                        const suffix = stat.textContent.replace(/\d/g, '');
+                        animateCounter(stat, target);
+                        stat.textContent += suffix;
+                    });
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
